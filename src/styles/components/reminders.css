@@ -1,0 +1,62 @@
+.reminders-card {
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: white;
+}
+
+.reminders-title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: .75rem;
+}
+
+.reminders-list {
+  display: grid;
+  gap: .5rem;
+}
+
+.reminder-item {
+  background: rgba(255,255,255,.1);
+  border-radius: .5rem;
+  padding: .5rem .75rem;
+}
+
+.reminder-text {
+  font-size: .85rem;
+  font-weight: 500;
+}
+
+.reminder-time {
+  font-size: .7rem;
+  opacity: .75;
+  margin-top: .2rem;
+}
+
+.reminders-add-btn {
+  margin-top: .75rem;
+  width: 100%;
+  background: rgba(255,255,255,.2);
+  border-radius: .5rem;
+  padding: .5rem;
+  font-size: .8rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  transition: .2s;
+}
+
+.reminders-add-btn:hover {
+  background: rgba(255,255,255,.3);
+}
+
+.reminders-empty {
+  font-size: .75rem;
+  opacity: .6;
+  text-align: center;
+}

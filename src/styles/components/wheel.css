@@ -1,0 +1,44 @@
+.wheel-svg {
+  width: 100%;
+  max-width: 26rem;
+  margin: auto;
+}
+
+.wheel-slice {
+  cursor: pointer;
+}
+
+.wheel-slice path {
+  stroke: white;
+  stroke-width: 2;
+  opacity: .9;
+  transition: .2s;
+}
+
+.wheel-slice:hover path {
+  opacity: 1;
+}
+
+.wheel-label {
+  fill: white;
+  font-size: 1rem;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.wheel-time {
+  fill: white;
+  font-size: .8rem;
+  pointer-events: none;
+}
+
+.wheel-center {
+  fill: white;
+  opacity: .9;
+}
+
+.wheel-day {
+  fill: #1e293b;
+  font-size: 1rem;
+  font-weight: 700;
+}

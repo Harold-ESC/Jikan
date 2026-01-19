@@ -1,0 +1,25 @@
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.app-header__top {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.app-header__title {
+  flex: 1;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.app-header__time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  font-size: 1.1rem;
+}

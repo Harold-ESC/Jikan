@@ -1,0 +1,31 @@
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  color: white;
+  background: rgba(255,255,255,.2);
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  transition: .2s;
+  backdrop-filter: blur(6px);
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255,255,255,.3);
+}
+
+.theme-toggle-icon {
+  font-size: 1.2rem;
+}
+
+.theme-toggle-text {
+  font-size: .8rem;
+  text-transform: capitalize;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .theme-toggle-text {
+    display: inline;
+  }
+}

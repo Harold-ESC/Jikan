@@ -33,7 +33,7 @@ const DetailView = ({
         <div className="flex justify-between items-center mb-4">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-white bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30 transition"
+            className="detail-back-btn"
             aria-label="Volver a vista principal"
           >
             <ChevronLeft size={20} />

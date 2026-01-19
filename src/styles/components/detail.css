@@ -1,0 +1,65 @@
+.detail-back-btn {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  color: white;
+  background: rgba(255,255,255,.2);
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  transition: .2s;
+}
+
+.detail-back-btn:hover {
+  background: rgba(255,255,255,.3);
+}
+
+.detail-card {
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  color: white;
+}
+
+.detail-color {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 999px;
+  margin: auto auto 1rem;
+}
+
+.detail-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+.detail-time {
+  font-size: 1.1rem;
+  opacity: .9;
+}
+
+.detail-sections {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.detail-block {
+  background: rgba(255,255,255,.1);
+  border-radius: .75rem;
+  padding: 1rem;
+}
+
+.detail-block h3 {
+  font-weight: 600;
+  margin-bottom: .5rem;
+}
+
+.detail-notes {
+  width: 100%;
+  background: rgba(255,255,255,.1);
+  border-radius: .5rem;
+  padding: .75rem;
+  color: white;
+}

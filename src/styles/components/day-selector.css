@@ -1,0 +1,72 @@
+.day-selector {
+  width: 100%;
+}
+
+/* móvil */
+.day-selector__mobile-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: .4rem;
+  margin-bottom: .4rem;
+  padding: 0 .75rem;
+}
+
+.day-btn {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: .75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.day-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.day-btn--active {
+  background: linear-gradient(135deg,#fff,#f2f2f2);
+  color: #312e81;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(0,0,0,.2);
+}
+
+.day-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.25rem;
+  height: .25rem;
+  background: white;
+  border-radius: 999px;
+}
+
+.day-current {
+  text-align: center;
+  color: rgba(255,255,255,.9);
+  font-size: .8rem;
+  font-weight: 600;
+  padding: 0 1rem;
+  margin-bottom: .5rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* escritorio */
+.day-selector__desktop-grid {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap: .75rem;
+  padding: 0 1rem;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.day-btn--desktop {
+  padding: .75rem 0;
+}
