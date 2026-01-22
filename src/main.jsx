@@ -1,15 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import "./styles/base.css";
-import "./styles/components/activity-card.css";
-import "./styles/components/stats.css";
-import "./styles/components/day-selector.css";
-import "./styles/components/detail.css";
-import "./styles/components/header.css";
-import "./styles/components/wheel.css";
-import "./styles/components/reminders.css";
-import "./styles/components/theme-toggle.css";
+import "./styles/maru/base.css";
+import "./styles/maru/activity-card.css";
+import "./styles/maru/stats.css";
+import "./styles/maru/day-selector.css";
+import "./styles/maru/detail.css";
+import "./styles/maru/header.css";
+import "./styles/maru/wheel.css";
+import "./styles/maru/reminders.css";
+import "./styles/maru/theme-toggle.css";
 
 import App from './App.jsx'
 
