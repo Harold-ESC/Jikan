@@ -106,7 +106,7 @@ const App = () => {
           </div>
 
           {/* Panel lateral */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:overflow-auto lg:max-h-[calc(100vh-200px)] custom-scrollbar">
             {/* Actividad actual */}
             {currentActivity && (
               <Card activity={currentActivity} />
