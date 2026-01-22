@@ -9,13 +9,13 @@
 import { useState } from 'react';
 
 // Componentes personalizados
-import PieChart from './components/wheel/PieChart';
-import DetailView from './components/activities/DetailView';
-import DaySelector from './components/common/DaySelector';
-import Card from './components/activities/Card';
-import Reminders from './components/stats/Reminders';
-import Daily from './components/stats/Daily';
-import Header from './components/common/Header';
+import PieChart from './core/wheel/PieChart';
+import DetailView from './core/activities/DetailView';
+import DaySelector from './core/common/DaySelector';
+import Card from './core/activities/Card';
+import Reminders from './core/stats/Reminders';
+import Daily from './core/stats/Daily';
+import Header from './core/common/Header';
 
 // Utilidades
 import { useClock } from './hooks/useClock';
