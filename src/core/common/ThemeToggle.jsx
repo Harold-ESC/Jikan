@@ -4,7 +4,7 @@
  * Botón para cambiar entre modos de tema (automático, claro, oscuro).
  */
 
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, SunMoon } from 'lucide-react';
 
 const ThemeToggle = ({ themeMode, onToggle }) => {
 
@@ -15,7 +15,7 @@ const ThemeToggle = ({ themeMode, onToggle }) => {
       case 'dark':
         return <Moon size={20} />;
       default:
-        return '🔄'; // auto
+        return <SunMoon size={20} />;
     }
   };
 
