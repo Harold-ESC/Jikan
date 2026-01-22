@@ -61,12 +61,14 @@
 .day-selector__desktop-grid {
   display: grid;
   grid-template-columns: repeat(7,1fr);
+  margin-bottom: 1rem;
   gap: .75rem;
   padding: 0 1rem;
-  max-width: 1100px;
-  margin: auto;
+  max-width: 64rem;
+  margin-bottom: 1rem;
 }
 
 .day-btn--desktop {
   padding: .75rem 0;
+  max-height: 3rem;
 }
