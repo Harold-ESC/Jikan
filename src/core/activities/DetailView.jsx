@@ -71,7 +71,6 @@ const DetailView = ({
             </h2>
 
             <p className="detail-time">
-              <Clock size={18} />
               {activity.start} - {activity.end}
             </p>
 
@@ -107,6 +106,8 @@ const DetailView = ({
                   <span className="detail-stat">
                     <strong>{durationMinutes}</strong> minutos
                   </span>
+                </div>
+                <div className="detail-duration-stats">
                   <span className="detail-stat">
                     <strong>{percentageOfDay}%</strong> del día
                   </span>
