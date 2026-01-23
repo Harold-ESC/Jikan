@@ -122,66 +122,6 @@ const DetailView = ({
               <p className="detail-day">{day}</p>
             </DetailBlock>
 
-            {!isEmpty && (
-              <DetailBlock 
-                title="Notas personales" 
-                icon={<FileText size={18} />}
-              >
-                <textarea
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="detail-notes"
-                  rows="6"
-                  placeholder="Añade notas personales sobre esta actividad...
-Ejemplos:
-- Objetivos específicos
-- Recursos necesarios
-- Recordatorios importantes
-- Reflexiones o aprendizajes"
-                />
-                
-                <div className="detail-notes-actions">
-                  <button 
-                    className="detail-notes-btn detail-notes-btn--save"
-                    disabled={!notes.trim()}
-                  >
-                    Guardar notas
-                  </button>
-                  <button 
-                    className="detail-notes-btn detail-notes-btn--clear"
-                    onClick={() => setNotes('')}
-                    disabled={!notes}
-                  >
-                    Limpiar
-                  </button>
-                </div>
-              </DetailBlock>
-            )}
-
-            {/* Información adicional para actividades largas */}
-            {durationMinutes >= 120 && !isEmpty && (
-              <DetailBlock 
-                title=" Sugerencias" 
-                icon={<AlertCircle size={18} />}
-              >
-                <div className="detail-suggestions">
-                  <p className="detail-suggestion">
-                    Esta es una actividad larga. Considera tomar descansos cada 50-60 minutos.
-                  </p>
-                  {durationMinutes >= 180 && (
-                    <p className="detail-suggestion">
-                      Planifica momentos para hidratarte y comer algo ligero.
-                    </p>
-                  )}
-                  {durationMinutes >= 240 && (
-                    <p className="detail-suggestion">
-                      Incluye pausas activas para mantener tu concentración y energía.
-                    </p>
-                  )}
-                </div>
-              </DetailBlock>
-            )}
-
           </div>
         </div>
       </div>
