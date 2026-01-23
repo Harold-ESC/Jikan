@@ -130,6 +130,15 @@ export const INITIAL_SCHEDULES = {
       start: 23,
       end: 24,
       description: 'Dormir'
+    },
+  ],  
+  Jueves: [
+    {
+      activity: '睡眠',
+      color: '#4ade80',
+      start: 2,
+      end: 6,
+      description: 'Descanso nocturno'
     }
   ]
 };
