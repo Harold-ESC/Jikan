@@ -6,8 +6,9 @@
  */
 
 import { useState } from 'react';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Clock, Calendar, FileText, AlertCircle } from 'lucide-react';
 import ThemeToggle from '../common/ThemeToggle';
+import { timeToMinutes, formatDuration } from '../../utils/time';
 
 const DetailView = ({
   activity,
@@ -21,7 +22,16 @@ const DetailView = ({
 
   if (!activity) return null;
 
-  const duration = activity.end - activity.start;
+  // Calcular duración en minutos
+  const startMinutes = timeToMinutes(activity.start);
+  const endMinutes = timeToMinutes(activity.end);
+  const durationMinutes = endMinutes - startMinutes;
+
+  // Calcular porcentaje del día
+  const percentageOfDay = ((durationMinutes / (24 * 60)) * 100).toFixed(1);
+
+  // Verificar si es una actividad vacía
+  const isEmpty = activity.isEmpty;
 
   return (
     <div
@@ -61,30 +71,115 @@ const DetailView = ({
             </h2>
 
             <p className="detail-time">
+              <Clock size={18} />
               {activity.start} - {activity.end}
             </p>
+
+            {isEmpty && (
+              <div className="detail-empty-badge">
+                <AlertCircle size={16} />
+                Tiempo libre
+              </div>
+            )}
           </div>
 
           {/* Secciones */}
           <div className="detail-sections">
 
-            <DetailBlock title="Descripción">
-              {activity.description}
+            <DetailBlock 
+              title="Descripción" 
+              icon={<FileText size={18} />}
+            >
+              <p className="detail-description">
+                {activity.description || 'Sin descripción'}
+              </p>
             </DetailBlock>
 
-            <DetailBlock title="Duración">
-              {duration} horas
+            <DetailBlock 
+              title="Duración" 
+              icon={<Clock size={18} />}
+            >
+              <div className="detail-duration-info">
+                <div className="detail-duration-main">
+                  {formatDuration(durationMinutes)}
+                </div>
+                <div className="detail-duration-stats">
+                  <span className="detail-stat">
+                    <strong>{durationMinutes}</strong> minutos
+                  </span>
+                  <span className="detail-stat">
+                    <strong>{percentageOfDay}%</strong> del día
+                  </span>
+                </div>
+              </div>
             </DetailBlock>
 
-            <DetailBlock title="Notas">
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                className="detail-notes"
-                rows="4"
-                placeholder="Añade notas personales sobre esta actividad..."
-              />
+            <DetailBlock 
+              title="Día" 
+              icon={<Calendar size={18} />}
+            >
+              <p className="detail-day">{day}</p>
             </DetailBlock>
+
+            {!isEmpty && (
+              <DetailBlock 
+                title="Notas personales" 
+                icon={<FileText size={18} />}
+              >
+                <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className="detail-notes"
+                  rows="6"
+                  placeholder="Añade notas personales sobre esta actividad...
+Ejemplos:
+- Objetivos específicos
+- Recursos necesarios
+- Recordatorios importantes
+- Reflexiones o aprendizajes"
+                />
+                
+                <div className="detail-notes-actions">
+                  <button 
+                    className="detail-notes-btn detail-notes-btn--save"
+                    disabled={!notes.trim()}
+                  >
+                    Guardar notas
+                  </button>
+                  <button 
+                    className="detail-notes-btn detail-notes-btn--clear"
+                    onClick={() => setNotes('')}
+                    disabled={!notes}
+                  >
+                    Limpiar
+                  </button>
+                </div>
+              </DetailBlock>
+            )}
+
+            {/* Información adicional para actividades largas */}
+            {durationMinutes >= 120 && !isEmpty && (
+              <DetailBlock 
+                title=" Sugerencias" 
+                icon={<AlertCircle size={18} />}
+              >
+                <div className="detail-suggestions">
+                  <p className="detail-suggestion">
+                    Esta es una actividad larga. Considera tomar descansos cada 50-60 minutos.
+                  </p>
+                  {durationMinutes >= 180 && (
+                    <p className="detail-suggestion">
+                      Planifica momentos para hidratarte y comer algo ligero.
+                    </p>
+                  )}
+                  {durationMinutes >= 240 && (
+                    <p className="detail-suggestion">
+                      Incluye pausas activas para mantener tu concentración y energía.
+                    </p>
+                  )}
+                </div>
+              </DetailBlock>
+            )}
 
           </div>
         </div>
@@ -93,10 +188,15 @@ const DetailView = ({
   );
 };
 
-const DetailBlock = ({ title, children }) => (
+const DetailBlock = ({ title, icon, children }) => (
   <div className="detail-block">
-    <h3>{title}</h3>
-    <div>{children}</div>
+    <h3 className="detail-block__title">
+      {icon && <span className="detail-block__icon">{icon}</span>}
+      {title}
+    </h3>
+    <div className="detail-block__content">
+      {children}
+    </div>
   </div>
 );
 
