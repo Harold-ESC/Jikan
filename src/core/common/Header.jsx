@@ -33,7 +33,6 @@ const Header = ({ currentTime, themeMode, onToggleTheme }) => {
       </div>
 
       <div className="app-header__time">
-        <Clock size={22} />
         <span>{timeString}</span>
       </div>
 
