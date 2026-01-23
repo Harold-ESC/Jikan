@@ -1,31 +1,36 @@
-/**
- * PieChart Component
- * 
- * Renderiza la rueda del horario usando SVG.
- */
+// core/wheel/PieChart.jsx
+import { timeToMinutes, minutesToTime } from '../../utils/time';
 
 const CENTER = 200;
 const RADIUS = 180;
 const LABEL_RADIUS = 120;
+const TOTAL_MINUTES = 24 * 60; // 1440 minutos en un día
 
 const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
 
-  // Función para crear un horario completo de 24 horas
+  /**
+   * Crea un horario completo de 24 horas con espacios vacíos
+   */
   const createFullSchedule = (schedule) => {
     const fullSchedule = [];
-    let currentHour = 0;
+    let currentMinutes = 0;
 
     // Ordenar el schedule por hora de inicio
-    const sortedSchedule = [...schedule].sort((a, b) => a.start - b.start);
+    const sortedSchedule = [...schedule].sort((a, b) => 
+      timeToMinutes(a.start) - timeToMinutes(b.start)
+    );
 
     sortedSchedule.forEach((item) => {
+      const itemStartMinutes = timeToMinutes(item.start);
+      const itemEndMinutes = timeToMinutes(item.end);
+
       // Si hay un hueco antes de esta actividad, añadir tiempo vacío
-      if (currentHour < item.start) {
+      if (currentMinutes < itemStartMinutes) {
         fullSchedule.push({
           activity: 'Libre',
           color: '#e5e7eb',
-          start: currentHour,
-          end: item.start,
+          start: minutesToTime(currentMinutes),
+          end: minutesToTime(itemStartMinutes),
           description: 'Tiempo libre',
           isEmpty: true
         });
@@ -33,16 +38,16 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
 
       // Añadir la actividad actual
       fullSchedule.push(item);
-      currentHour = item.end;
+      currentMinutes = itemEndMinutes;
     });
 
-    // Si quedan horas al final del día, añadir tiempo vacío
-    if (currentHour < 24) {
+    // Si quedan minutos al final del día, añadir tiempo vacío
+    if (currentMinutes < TOTAL_MINUTES) {
       fullSchedule.push({
         activity: 'Libre',
         color: '#e5e7eb',
-        start: currentHour,
-        end: 24,
+        start: minutesToTime(currentMinutes),
+        end: '24:00',
         description: 'Tiempo libre',
         isEmpty: true
       });
@@ -52,7 +57,7 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
   };
 
   const fullSchedule = createFullSchedule(schedule);
-  let currentAngle = -90;
+  let currentAngle = -90; // Empezar desde las 12 (arriba)
 
   const polarToCartesian = (angle, radius) => {
     const rad = (angle * Math.PI) / 180;
@@ -64,53 +69,13 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
 
   const renderSlices = () =>
     fullSchedule.map((item, index) => {
-      const duration = item.end - item.start;
-      const angle = (duration / 24) * 360;
+      const startMinutes = timeToMinutes(item.start);
+      const endMinutes = timeToMinutes(item.end);
+      const durationMinutes = endMinutes - startMinutes;
+      
+      // Calcular el ángulo basado en la duración en minutos
+      const angle = (durationMinutes / TOTAL_MINUTES) * 360;
       const endAngle = currentAngle + angle;
-
-      // Para círculos completos (360 grados), usar un círculo en lugar de path
-      if (angle >= 360) {
-        currentAngle = endAngle;
-        return (
-          <g
-            key={`${item.activity}-${index}`}
-            className={`wheel-slice ${item.isEmpty ? 'wheel-slice-empty' : ''}`}
-            onClick={() => !item.isEmpty && onActivitySelect(item)}
-            style={{ cursor: item.isEmpty ? 'default' : 'pointer' }}
-          >
-            <circle
-              cx={CENTER}
-              cy={CENTER}
-              r={RADIUS}
-              fill={item.color}
-              stroke="white"
-              strokeWidth="2"
-              opacity={item.isEmpty ? "0.3" : "0.9"}
-            />
-            <text
-              x={CENTER}
-              y={CENTER - 20}
-              textAnchor="middle"
-              className="wheel-label"
-              fill={item.isEmpty ? "#9ca3af" : "white"}
-              fontSize="20"
-              fontWeight="bold"
-            >
-              {item.activity}
-            </text>
-            <text
-              x={CENTER}
-              y={CENTER + 10}
-              textAnchor="middle"
-              className="wheel-time"
-              fill={item.isEmpty ? "#9ca3af" : "white"}
-              fontSize="14"
-            >
-              Todo el día
-            </text>
-          </g>
-        );
-      }
 
       const largeArcFlag = angle > 180 ? 1 : 0;
 
@@ -129,8 +94,8 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
 
       currentAngle = endAngle;
 
-      // No mostrar etiqueta si el segmento es muy pequeño
-      const showLabel = duration >= 0.5;
+      // No mostrar etiqueta si el segmento es muy pequeño (menos de 30 minutos)
+      const showLabel = durationMinutes >= 30;
 
       return (
         <g
@@ -165,8 +130,9 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
                 textAnchor="middle"
                 className="wheel-time"
                 fill={item.isEmpty ? "#9ca3af" : "white"}
+                fontSize="12"
               >
-                {item.start}-{item.end}h
+                {item.start}-{item.end}
               </text>
             </>
           )}
@@ -175,19 +141,11 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
     });
 
   return (
-    <svg
-      viewBox="0 0 400 400"
-      className="wheel-svg"
-    >
+    <svg viewBox="0 0 400 400" className="wheel-svg">
       {renderSlices()}
 
       {/* Centro */}
-      <circle
-        cx={CENTER}
-        cy={CENTER}
-        r="60"
-        className="wheel-center"
-      />
+      <circle cx={CENTER} cy={CENTER} r="60" className="wheel-center" />
 
       <text
         x={CENTER}

@@ -19,57 +19,57 @@ export const INITIAL_SCHEDULES = {
     {
       activity: '睡眠',
       color: '#4ade80',
-      start: 0,
-      end: 7,
+      start: "00:00",
+      end: "07:00",
       description: 'Descanso nocturno'
     },
     {
       activity: '食事',
       color: '#fb923c',
-      start: 7,
-      end: 8,
+      start: "07:00",
+      end: "08:00",
       description: 'Desayuno'
     },
     {
       activity: '勉強',
       color: '#3b82f6',
-      start: 8,
-      end: 12,
+      start: "08:00",
+      end: "12:00",
       description: 'Clases universitarias'
     },
     {
       activity: '食事',
       color: '#fb923c',
-      start: 12,
-      end: 13,
+      start: "12:00",
+      end: "13:00",
       description: 'Almuerzo'
     },
     {
       activity: '勉強',
       color: '#60a5fa',
-      start: 13,
-      end: 18,
+      start: "13:00",
+      end: "18:00",
       description: 'Estudio y programación'
     },
     {
       activity: '食事',
       color: '#fb923c',
-      start: 18,
-      end: 19,
+      start: "18:00",
+      end: "19:00",
       description: 'Cena'
     },
     {
       activity: '勉強',
       color: '#3b82f6',
-      start: 19,
-      end: 22,
+      start: "19:00",
+      end: "22:00",
       description: 'Proyectos personales'
     },
     {
       activity: '睡眠',
       color: '#4ade80',
-      start: 22,
-      end: 24,
+      start: "22:00",
+      end: "24:00",
       description: 'Prepararse para dormir'
     }
   ],
@@ -78,57 +78,57 @@ export const INITIAL_SCHEDULES = {
     {
       activity: '睡眠',
       color: '#4ade80',
-      start: 0,
-      end: 7,
+      start: "00:00",
+      end: "07:00",
       description: 'Descanso nocturno'
     },
     {
       activity: '食事',
       color: '#fb923c',
-      start: 7,
-      end: 8,
+      start: "07:00",
+      end: "08:00",
       description: 'Desayuno'
     },
     {
       activity: '勉強',
       color: '#3b82f6',
-      start: 8,
-      end: 13,
+      start: "08:00",
+      end: "13:00",
       description: 'Clases universitarias'
     },
     {
       activity: '食事',
       color: '#fb923c',
-      start: 13,
-      end: 14,
+      start: "13:00",
+      end: "14:00",
       description: 'Almuerzo'
     },
     {
       activity: '勉強',
       color: '#60a5fa',
-      start: 14,
-      end: 19,
+      start: "14:00",
+      end: "19:00",
       description: 'Laboratorio'
     },
     {
       activity: '食事',
       color: '#fb923c',
-      start: 19,
-      end: 20,
+      start: "19:00",
+      end: "20:00",
       description: 'Cena'
     },
     {
       activity: '勉強',
       color: '#3b82f6',
-      start: 20,
-      end: 23,
+      start: "20:00",
+      end: "23:00",
       description: 'Estudio'
     },
     {
       activity: '睡眠',
       color: '#4ade80',
-      start: 23,
-      end: 24,
+      start: "23:00",
+      end: "24:00",
       description: 'Dormir'
     },
   ],  
@@ -136,8 +136,8 @@ export const INITIAL_SCHEDULES = {
     {
       activity: '睡眠',
       color: '#4ade80',
-      start: 2,
-      end: 6,
+      start: "02:00",
+      end: "06:00",
       description: 'Descanso nocturno'
     }
   ]

@@ -61,7 +61,7 @@ const DetailView = ({
             </h2>
 
             <p className="detail-time">
-              {activity.start}:00 - {activity.end}:00
+              {activity.start} - {activity.end}
             </p>
           </div>
 

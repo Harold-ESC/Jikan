@@ -20,7 +20,7 @@ import Header from './core/common/Header';
 // Utilidades
 import { useClock } from './hooks/useClock';
 import { useTheme } from './hooks/useTheme';
-import { DAYS_OF_WEEK, INITIAL_SCHEDULES, INITIAL_REMINDERS } from './constants';
+import { DAYS_OF_WEEK, INITIAL_SCHEDULES, INITIAL_REMINDERS } from './utils/index';
 
 const App = () => {
   // Estados principales
