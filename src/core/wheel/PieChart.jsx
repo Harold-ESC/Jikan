@@ -117,31 +117,38 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
             d={path} 
             fill={item.color}
             stroke="white"
-            strokeWidth="2"
-            opacity={item.isEmpty ? "0.3" : "0.9"}
+            strokeWidth="3"
+            opacity={item.isEmpty ? "0.4" : "1"}
           />
 
           {showLabel && (
             <>
               <text
                 x={label.x}
-                y={label.y}
+                y={label.y - 5}
                 textAnchor="middle"
-                className="wheel-label"
-                fill={item.isEmpty ? "#9ca3af" : "white"}
-                fontSize="14"
-                fontWeight="500"
+                fill="white"
+                fontSize="18"
+                fontWeight="bold"
+                style={{ 
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                  pointerEvents: 'none'
+                }}
               >
                 {item.title || item.activity}
               </text>
 
               <text
                 x={label.x}
-                y={label.y + 18}
+                y={label.y + 15}
                 textAnchor="middle"
-                className="wheel-time"
-                fill={item.isEmpty ? "#9ca3af" : "white"}
-                fontSize="11"
+                fill="white"
+                fontSize="14"
+                fontWeight="500"
+                style={{ 
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                  pointerEvents: 'none'
+                }}
               >
                 {formatTime(item.start)}-{formatTime(item.end)}
               </text>
@@ -180,65 +187,16 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
         >
           {sliceContent}
           
-          {/* Tooltip hover effect */}
-          <path 
-            d={path} 
-            fill="transparent"
-            stroke="transparent"
-            strokeWidth="10"
-            className="wheel-hitbox"
-          />
-          
           <title>
-            {item.title || item.activity}\n
-            {formatTime(item.start)} - {formatTime(item.end)}\n
+            {item.title || item.activity}
+            {'\n'}
+            {formatTime(item.start)} - {formatTime(item.end)}
+            {'\n'}
             {item.description || 'Sin descripción'}
           </title>
         </g>
       );
     });
-
-  // Función para renderizar las líneas de hora
-  const renderHourLines = () => {
-    const lines = [];
-    for (let hour = 0; hour < 24; hour++) {
-      const angle = -90 + (hour / 24) * 360;
-      const start = polarToCartesian(angle, RADIUS - 10);
-      const end = polarToCartesian(angle, RADIUS + 10);
-      
-      lines.push(
-        <line
-          key={`hour-line-${hour}`}
-          x1={start.x}
-          y1={start.y}
-          x2={end.x}
-          y2={end.y}
-          stroke="#ffffff40"
-          strokeWidth="1"
-          strokeDasharray={hour % 3 === 0 ? "none" : "5,5"}
-        />
-      );
-      
-      // Etiqueta de hora cada 3 horas
-      if (hour % 3 === 0) {
-        const labelPos = polarToCartesian(angle, RADIUS + 25);
-        lines.push(
-          <text
-            key={`hour-label-${hour}`}
-            x={labelPos.x}
-            y={labelPos.y}
-            textAnchor="middle"
-            fill="#ffffff80"
-            fontSize="12"
-            fontWeight="500"
-          >
-            {hour === 0 ? '24' : hour}h
-          </text>
-        );
-      }
-    }
-    return lines;
-  };
 
   return (
     <svg 
@@ -246,70 +204,30 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
       className="wheel-svg"
       style={{ width: '100%', height: 'auto' }}
     >
-      {/* Fondo del círculo */}
-      <circle 
-        cx={CENTER} 
-        cy={CENTER} 
-        r={RADIUS + 5} 
-        fill="rgba(255, 255, 255, 0.05)"
-      />
-      
-      {/* Líneas de hora */}
-      {renderHourLines()}
-      
-      {/* Segmentos */}
+      {/* Segmentos del horario */}
       {renderSlices()}
 
-      {/* Centro con gradiente */}
-      <defs>
-        <radialGradient id="centerGradient" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(255, 255, 255, 0.1)" />
-          <stop offset="100%" stopColor="rgba(255, 255, 255, 0.05)" />
-        </radialGradient>
-      </defs>
-      
-      <circle 
-        cx={CENTER} 
-        cy={CENTER} 
-        r="70" 
-        fill="url(#centerGradient)"
-        stroke="rgba(255, 255, 255, 0.2)"
-        strokeWidth="2"
-      />
-      
+      {/* Centro simple y limpio */}
       <circle 
         cx={CENTER} 
         cy={CENTER} 
         r="60" 
-        fill="rgba(0, 0, 0, 0.3)"
-        stroke="rgba(255, 255, 255, 0.3)"
-        strokeWidth="1"
+        fill="white"
+        opacity="0.95"
       />
 
       <text
         x={CENTER}
-        y={CENTER}
+        y={CENTER - 5}
         textAnchor="middle"
         dominantBaseline="middle"
-        className="wheel-day"
-        fill="white"
-        fontSize="24"
+        fill="#1e293b"
+        fontSize="20"
         fontWeight="bold"
-        style={{ textTransform: 'uppercase' }}
       >
         {currentDay}
       </text>
       
-      <text
-        x={CENTER}
-        y={CENTER + 28}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill="rgba(255, 255, 255, 0.7)"
-        fontSize="12"
-      >
-        Horario
-      </text>
     </svg>
   );
 };

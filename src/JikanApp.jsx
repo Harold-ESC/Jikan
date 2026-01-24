@@ -406,7 +406,7 @@ const App = ({ user }) => {
                 Añadir actividad
               </button>
               <p className="text-white/60 text-sm mt-3">
-                💡 Click derecho en una actividad para editarla
+                 Click derecho en una actividad para editarla
               </p>
             </div>
           </div>
