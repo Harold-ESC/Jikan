@@ -13,7 +13,7 @@ import { supabase } from './lib/supabase';
 import PieChart from './core/wheel/PieChart';
 import DetailView from './core/activities/DetailView';
 import DaySelector from './core/common/DaySelector';
-import Card from './core/activities/Card';
+import ActivityCard from './core/activities/Card';
 import Reminders from './core/stats/Reminders';
 import Daily from './core/stats/Daily';
 import Header from './core/common/Header';
@@ -415,7 +415,12 @@ const App = ({ user }) => {
           <div className="space-y-4 lg:overflow-auto lg:max-h-[calc(100vh-200px)] custom-scrollbar">
             {/* Actividad actual */}
             {currentActivity && (
-              <Card activity={currentActivity} />
+                <ActivityCard 
+                  activity={currentActivity}
+                  currentDay={currentDay}
+                  currentTime={currentTime}
+                  label="ACTIVIDAD ACTUAL"
+                />
             )}
 
             {/* Recordatorios */}
