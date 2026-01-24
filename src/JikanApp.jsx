@@ -20,19 +20,28 @@ import Header from './core/common/Header';
 // Utilidades
 import { useClock } from './hooks/useClock';
 import { useTheme } from './hooks/useTheme';
-import { DAYS_OF_WEEK, INITIAL_SCHEDULES, INITIAL_REMINDERS } from './utils/index';
+import { DAYS_OF_WEEK, INITIAL_REMINDERS } from './utils/index';
+import { useActivities } from './hooks/useActivities';
 
-const App = () => {
+const App = ({ user }) => {
   // Estados principales
   const [currentDay, setCurrentDay] = useState('Lunes');
   const [view, setView] = useState('main'); // 'main' | 'detail'
   const [selectedActivity, setSelectedActivity] = useState(null);
-  const [schedules] = useState(INITIAL_SCHEDULES);
+  const { schedules, loading } = useActivities(user);
   const [reminders] = useState(INITIAL_REMINDERS);
 
   // Hooks personalizados
   const currentTime = useClock();
   const { themeMode, toggleTheme, bgColor } = useTheme();
+
+  if (loading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center text-white">
+      Cargando tu horario…
+    </div>
+  );
+}
 
   /**
    * Obtiene la actividad actual según la hora y el día seleccionado
@@ -92,7 +101,7 @@ const App = () => {
           currentDay={currentDay}
           onSelectDay={setCurrentDay}
         />
-
+        
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Rueda de horario */}
           <div className="lg:col-span-2">
