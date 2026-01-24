@@ -5,43 +5,41 @@ export function useActivities(user) {
   const [schedules, setSchedules] = useState({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const reload = async () => {
     if (!user) return;
 
-    const loadActivities = async () => {
-      setLoading(true);
+    setLoading(true);
 
-      const { data, error } = await supabase
-        .from('activities')
-        .select('*')
-        .order('start_time');
+    const { data } = await supabase
+      .from('activities')
+      .select('*')
+      .order('start_time');
 
-      if (!error && data) {
-        const grouped = {};
+    const grouped = {};
+    data?.forEach(a => {
+      if (!grouped[a.day_of_week]) grouped[a.day_of_week] = [];
 
-        data.forEach(activity => {
-          if (!grouped[activity.day_of_week]) {
-            grouped[activity.day_of_week] = [];
-          }
+      grouped[a.day_of_week].push({
+        id: a.id,
+        start: parseInt(a.start_time),
+        end: parseInt(a.end_time),
+        title: a.title,
+        description: a.description,
+        color: a.color,
+      });
+    });
 
-          grouped[activity.day_of_week].push({
-            id: activity.id,
-            start: parseInt(activity.start_time.split(':')[0], 10),
-            end: parseInt(activity.end_time.split(':')[0], 10),
-            title: activity.title,
-            description: activity.description,
-            color: activity.color,
-          });
-        });
+    setSchedules(grouped);
+    setLoading(false);
+  };
 
-        setSchedules(grouped);
-      }
-
-      setLoading(false);
-    };
-
-    loadActivities();
+  useEffect(() => {
+    reload();
   }, [user]);
 
-  return { schedules, loading };
+  return {
+    schedules,
+    loading,
+    reload,
+  };
 }

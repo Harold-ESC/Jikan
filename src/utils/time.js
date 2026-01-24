@@ -1,44 +1,69 @@
-// utils/timeUtils.js
+// utils/time.js
 
-/**
- * Convierte una cadena HH:mm a minutos desde medianoche
- */
-export const timeToMinutes = (timeStr) => {
-  const [hours, minutes] = timeStr.split(':').map(Number);
-  return hours * 60 + minutes;
+// Convertir hora en formato HH:MM a minutos
+export const timeToMinutes = (time) => {
+  if (typeof time === 'number') {
+    return time * 60;
+  }
+  
+  if (typeof time === 'string') {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + (minutes || 0);
+  }
+  
+  return 0;
 };
 
-/**
- * Convierte minutos desde medianoche a cadena HH:mm
- */
+// Convertir minutos a hora en formato HH:MM
 export const minutesToTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
   return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
 };
 
-/**
- * Convierte minutos a fracción decimal de hora
- */
-export const minutesToHours = (minutes) => {
-  return minutes / 60;
+// Formatear hora (número o string) a formato HH:MM
+export const formatHour = (hour) => {
+  if (typeof hour === 'number') {
+    const hours = Math.floor(hour);
+    const minutes = Math.round((hour - hours) * 60);
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
+  
+  if (typeof hour === 'string') {
+    if (hour.includes(':')) {
+      const [h, m] = hour.split(':');
+      return `${h.padStart(2, '0')}:${(m || '00').padStart(2, '0')}`;
+    }
+    return `${hour.padStart(2, '0')}:00`;
+  }
+  
+  return '00:00';
 };
 
-/**
- * Obtiene el tiempo actual en minutos desde medianoche
- */
-export const getCurrentMinutes = (date) => {
-  return date.getHours() * 60 + date.getMinutes();
+// Calcular duración en horas entre dos horas
+export const calculateDuration = (start, end) => {
+  const startMinutes = timeToMinutes(start);
+  const endMinutes = timeToMinutes(end);
+  return (endMinutes - startMinutes) / 60;
 };
 
-/**
- * Formatea la duración en formato legible
- */
+// Verificar si una hora está dentro de un rango
+export const isTimeInRange = (time, start, end) => {
+  const timeMinutes = timeToMinutes(time);
+  const startMinutes = timeToMinutes(start);
+  const endMinutes = timeToMinutes(end);
+  return timeMinutes >= startMinutes && timeMinutes < endMinutes;
+};
+
 export const formatDuration = (minutes) => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
   
-  if (hours === 0) return `${mins}min`;
-  if (mins === 0) return `${hours}h`;
-  return `${hours}h ${mins}min`;
+  if (hours === 0) {
+    return `${mins} minuto${mins !== 1 ? 's' : ''}`;
+  } else if (mins === 0) {
+    return `${hours} hora${hours !== 1 ? 's' : ''}`;
+  } else {
+    return `${hours}h ${mins}m`;
+  }
 };
