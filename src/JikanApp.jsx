@@ -489,12 +489,6 @@ const App = ({ user }) => {
                 />
             )}
 
-            {/* Recordatorios */}
-            <Reminders
-              reminders={reminders}
-              onAddReminder={() => {/* Implementar lógica */ }}
-            />
-
             {/* Estadísticas */}
             <Daily schedule={schedules[currentDay] || []} />
           </div>
