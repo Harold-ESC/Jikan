@@ -200,7 +200,7 @@ const LoginScreen = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full bg-white/10 border border-white/20 rounded-xl py-3 pl-12 pr-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition"
-                    placeholder="Tu nombre"
+                    placeholder="Nombre"
                   />
                 </div>
               </div>
