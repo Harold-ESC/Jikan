@@ -17,9 +17,10 @@ import ActivityCard from './core/activities/Card';
 import Reminders from './core/stats/Reminders';
 import Daily from './core/stats/Daily';
 import Header from './core/common/Header';
+import CopyDayModal from './core/common/CopyDayModal';
 
 // Iconos
-import { ChevronLeft, Plus, Trash2 } from 'lucide-react';
+import { ChevronLeft, Plus, Trash2, Copy } from 'lucide-react';
 
 // Utilidades
 import { useClock } from './hooks/useClock';
@@ -35,6 +36,7 @@ const App = ({ user }) => {
   const [editingActivity, setEditingActivity] = useState(null);
   const [editingDay, setEditingDay] = useState(null);
   const [editingActivityIndex, setEditingActivityIndex] = useState(null);
+  const [showCopyModal, setShowCopyModal] = useState(false);
   const [tempActivity, setTempActivity] = useState({
     start: 9,
     end: 10,
@@ -58,13 +60,69 @@ const App = ({ user }) => {
     );
   }
 
+  /**
+   * Copia todas las actividades de un día a otro
+   */
+  const handleCopyDay = async (sourceDay, targetDay) => {
+    const sourceActivities = schedules[sourceDay] || [];
+    
+    if (sourceActivities.length === 0) {
+      alert('El día seleccionado no tiene actividades para copiar');
+      return;
+    }
+
+    // Confirmar antes de reemplazar
+    const confirm = window.confirm(
+      `¿Estás seguro de reemplazar todas las actividades de ${targetDay} con las de ${sourceDay}?\n\n` +
+      `Esto eliminará ${(schedules[targetDay] || []).length} actividad(es) existente(s) y creará ${sourceActivities.length} nueva(s).`
+    );
+
+    if (!confirm) return;
+
+    try {
+      // 1. Eliminar todas las actividades existentes del día destino
+      const existingActivities = schedules[targetDay] || [];
+      for (const activity of existingActivities) {
+        if (activity.id) {
+          await supabase
+            .from('activities')
+            .delete()
+            .eq('id', activity.id);
+        }
+      }
+
+      // 2. Insertar las nuevas actividades (copias del día fuente)
+      const newActivities = sourceActivities.map(activity => ({
+        day_of_week: targetDay,
+        start_time: `${activity.start.toString().padStart(2, '0')}:00`,
+        end_time: `${activity.end.toString().padStart(2, '0')}:00`,
+        title: activity.title,
+        description: activity.description || '',
+        color: activity.color || '#7c5cff',
+        user_id: user.id,
+      }));
+
+      const { error } = await supabase
+        .from('activities')
+        .insert(newActivities);
+
+      if (error) throw error;
+
+      // 3. Recargar datos
+      await reload();
+      
+      alert(`${sourceActivities.length} actividades copiadas exitosamente de ${sourceDay} a ${targetDay}`);
+    } catch (error) {
+      alert('Error al copiar actividades: ' + error.message);
+    }
+  };
+
   // Función para manejar la eliminación de actividad
   const handleDeleteActivity = async (day, activityIndex) => {
     const schedule = schedules[day] || [];
     const activity = schedule[activityIndex];
     
     if (!activity?.id) {
-      // Si no hay ID, es local, simplemente quitar del estado local
       console.log('No se puede eliminar actividad sin ID');
       return;
     }
@@ -232,7 +290,7 @@ const App = ({ user }) => {
           
           <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 text-white">
             <h2 className="text-3xl font-bold mb-6 text-center">
-              {editingActivity ? 'Editar Actividad' : ' Nueva Actividad'}
+              {editingActivity ? 'Editar Actividad' : 'Nueva Actividad'}
             </h2>
             
             <div className="space-y-6">
@@ -396,8 +454,8 @@ const App = ({ user }) => {
               />
             </div>
             
-            {/* Botón para añadir actividad */}
-            <div className="mt-6 text-center">
+            {/* Botones de acción */}
+            <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center items-center">
               <button
                 onClick={() => handleAddActivity(currentDay)}
                 className="bg-white/20 hover:bg-white/30 text-white font-medium px-6 py-3 rounded-lg transition inline-flex items-center gap-2"
@@ -405,10 +463,18 @@ const App = ({ user }) => {
                 <Plus size={20} />
                 Añadir actividad
               </button>
-              <p className="text-white/60 text-sm mt-3">
-                 Click derecho en una actividad para editarla
-              </p>
+              
+              <button
+                onClick={() => setShowCopyModal(true)}
+                className="bg-white/20 hover:bg-white/30 text-white font-medium px-6 py-3 rounded-lg transition inline-flex items-center gap-2"
+              >
+                <Copy size={20} />
+                Copiar desde otro día
+              </button>
             </div>
+            <p className="text-white/60 text-sm mt-3 text-center">
+              Click derecho en una actividad para editarla
+            </p>
           </div>
 
           {/* Panel lateral */}
@@ -434,6 +500,15 @@ const App = ({ user }) => {
           </div>
         </div>
       </div>
+
+      {/* Modal para copiar día */}
+      <CopyDayModal
+        isOpen={showCopyModal}
+        onClose={() => setShowCopyModal(false)}
+        currentDay={currentDay}
+        schedules={schedules}
+        onCopyDay={handleCopyDay}
+      />
     </div>
   );
 };
