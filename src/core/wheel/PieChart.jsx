@@ -12,6 +12,20 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
    * Crea un horario completo de 24 horas con espacios vacíos
    */
   const createFullSchedule = (schedule) => {
+    // Si no hay ninguna actividad, devolver un día completo sin asignar
+    if (!schedule || schedule.length === 0) {
+      return [{
+        activity: 'Sin asignar',
+        title: 'Sin asignar',
+        color: '#d1d5db',
+        start: 0,
+        end: 24,
+        description: 'No hay actividades programadas para este día',
+        isEmpty: true,
+        isFullDay: true
+      }];
+    }
+
     const fullSchedule = [];
     let currentMinutes = 0;
 
@@ -125,10 +139,10 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
             <>
               <text
                 x={label.x}
-                y={label.y - 5}
+                y={item.isFullDay ? label.y : label.y - 5}
                 textAnchor="middle"
-                fill="white"
-                fontSize="18"
+                fill={item.isFullDay ? "#9ca3af" : "white"}
+                fontSize={item.isFullDay ? "22" : "18"}
                 fontWeight="bold"
                 style={{ 
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
@@ -138,20 +152,22 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
                 {item.title || item.activity}
               </text>
 
-              <text
-                x={label.x}
-                y={label.y + 15}
-                textAnchor="middle"
-                fill="white"
-                fontSize="14"
-                fontWeight="500"
-                style={{ 
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-                  pointerEvents: 'none'
-                }}
-              >
-                {formatTime(item.start)}-{formatTime(item.end)}
-              </text>
+              {!item.isFullDay && (
+                <text
+                  x={label.x}
+                  y={label.y + 15}
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="14"
+                  fontWeight="500"
+                  style={{ 
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                    pointerEvents: 'none'
+                  }}
+                >
+                  {formatTime(item.start)}-{formatTime(item.end)}
+                </text>
+              )}
             </>
           )}
         </>
@@ -228,6 +244,16 @@ const PieChart = ({ schedule, currentDay, onActivitySelect }) => {
         {currentDay}
       </text>
       
+      <text
+        x={CENTER}
+        y={CENTER + 18}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill="#64748b"
+        fontSize="12"
+      >
+        24 horas
+      </text>
     </svg>
   );
 };
