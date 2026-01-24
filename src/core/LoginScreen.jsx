@@ -249,19 +249,6 @@ const LoginScreen = () => {
                 </button>
               </div>
             </div>
-            
-            {/* Recordar contraseña */}
-            {isLogin && (
-              <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center text-white/80 cursor-pointer">
-                  <input type="checkbox" className="mr-2 rounded" />
-                  Recordarme
-                </label>
-                <a href="#" className="text-white/80 hover:text-white transition">
-                  ¿Olvidaste tu contraseña?
-                </a>
-              </div>
-            )}
 
             {/* Botón de envío */}
             <button
@@ -313,18 +300,6 @@ const LoginScreen = () => {
             </button>
           </div>
         </div>
-
-        {/* Footer */}
-        <p className="text-center text-white/60 text-sm mt-6">
-          Al continuar, aceptas nuestros{' '}
-          <a href="#" className="text-white/80 hover:text-white underline">
-            Términos de Servicio
-          </a>{' '}
-          y{' '}
-          <a href="#" className="text-white/80 hover:text-white underline">
-            Política de Privacidad
-          </a>
-        </p>
       </div>
 
       <style>{`
