@@ -24,13 +24,6 @@ const LoginScreen = () => {
     return hours >= 20 || hours < 6;
   };
 
-  const getGreeting = () => {
-    const hours = currentTime.getHours();
-    if (hours < 12) return '¡Buenos días!';
-    if (hours < 19) return '¡Buenas tardes!';
-    return '¡Buenas noches!';
-  };
-
   const bgGradient = isNightTime() 
     ? 'from-indigo-900 via-purple-900 to-pink-900' 
     : 'from-blue-400 via-cyan-400 to-teal-400';
@@ -147,8 +140,8 @@ const LoginScreen = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-lg rounded-full mb-4">
             <Clock size={40} className="text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2">Horario Circular</h1>
-          <p className="text-white/80 text-lg">{getGreeting()}</p>
+          <h1 className="text-4xl font-bold text-white mb-2">Jikan Maru</h1>
+          <h2 className="text-xl text-white/90">Proyecto de horario circular</h2>
           <p className="text-white/60 text-sm mt-1">
             {currentTime.toLocaleDateString('es-ES', { 
               weekday: 'long', 
