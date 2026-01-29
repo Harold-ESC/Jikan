@@ -149,7 +149,7 @@ const Daily = ({ schedule }) => {
       )}
 
       {/* Porcentaje programado */}
-      <div className="mb-6">
+      <div className="mb-6 bg-white/5 rounded-xl p-4">
         <div className="flex justify-between items-center mb-2">
           <h4 className="text-sm font-medium text-white/70">Porcentaje programado</h4>
           <span className="font-semibold">{efficiencyPercentage}%</span>
@@ -171,7 +171,7 @@ const Daily = ({ schedule }) => {
       </div>
 
       {/* Desglose por actividad */}
-      <div className="mb-4">
+      <div className="mb-4 bg-white/5 rounded-xl p-4">
         <h4 className="text-sm font-medium text-white/70 mb-3">Distribución del tiempo</h4>
         <div className="space-y-3">
           {Object.entries(activityStats)
