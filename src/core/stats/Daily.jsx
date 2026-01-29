@@ -211,23 +211,6 @@ const Daily = ({ schedule }) => {
             })}
         </div>
       </div>
-
-      {/* Tiempo libre vs actividades */}
-      <div className="bg-white/5 rounded-xl p-4">
-        <h4 className="text-sm font-medium text-white/70 mb-3">Balance del día</h4>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-300">{activityCount}</div>
-            <div className="text-xs text-white/60">Actividades</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-yellow-300">
-              {formatDuration(freeTimeMinutes)}
-            </div>
-            <div className="text-xs text-white/60">Tiempo libre</div>
-          </div>
-        </div>
-      </div>
     </section>
   );
 };
